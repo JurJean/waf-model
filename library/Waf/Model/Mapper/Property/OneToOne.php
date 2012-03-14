@@ -11,6 +11,7 @@ class Waf_Model_Mapper_Property_OneToOne
     extends Waf_Model_Mapper_Property_PropertyAbstract
 {
     private $_relatedEntity;
+    private $_relatedFieldName;
 
     /**
      * @var boolean
@@ -45,6 +46,22 @@ class Waf_Model_Mapper_Property_OneToOne
         $this->_relatedEntity = $relatedEntity;
 
         return $this;
+    }
+    
+    public function setRelatedFieldName($relatedFieldName)
+    {
+        $this->_relatedFieldName = $relatedFieldName;
+
+        return $this;
+    }
+
+    public function getRelatedFieldName()
+    {
+        if (null === $this->_relatedFieldName) {
+            $this->setRelatedFieldName('id');
+        }
+
+        return $this->_relatedFieldName;
     }
 
 //    public function setLazyLoad($flag)
@@ -96,6 +113,11 @@ class Waf_Model_Mapper_Property_OneToOne
         if (is_null($value) && true !== $this->_notNull) {
             return null;
         }
-        return $this->getRepository()->find($value);
+        return $this->getRepository()->find(
+            new Waf_Model_QueryFilter_ByIdentity(
+                $this->getRelatedFieldName(),
+                $value
+            )
+        );
     }
 }
