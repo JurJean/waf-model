@@ -148,7 +148,7 @@ class Waf_Model_Mapper_Property extends Waf_Model_Mapper_MapperAbstract
         if (null === $this->pluginLoader) {
             $this->setPluginLoader(
                 new Zend_Loader_PluginLoader(array(
-                    'Waf_Model_Mapper_Property'     => 'Waf/Model/Mapper/Property',
+                    'Waf_Model_Mapper_Property'     => dirname(__FILE__) . '/Property',
                     'App_Waf_Model_Mapper_Property' => 'App/Waf/Model/Mapper/Property'
                 ))
             );
