@@ -9,15 +9,17 @@
  */
 class Waf_Model_QueryFilter_ByIdentity implements Waf_Model_QueryFilter_QueryFilterInterface
 {
+    private $_fieldName;
     private $_id;
 
-    public function __construct($id)
+    public function __construct($fieldName, $id)
     {
+        $this->_fieldName = $fieldName;
         $this->_id = $id;
     }
 
     public function filter($query)
     {
-        return $query->where('id = ?', $this->_id);
+        return $query->where($this->_fieldName . ' = ?', $this->_id);
     }
 }
